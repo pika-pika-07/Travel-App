@@ -9,15 +9,26 @@
  <body>
 <div id = "app">
   <div class ="holder headline">
-    Weather Journal App
+   Travel Planner
   </div>
-  <div class ="holder zip">
-    <label for="zip">Enter Zipcode here</label>
-    <input type="text" id="zip" placeholder="enter zip code here">
+  <div class="destinationSection">
+    <label class="label-destination" for="input-destination">My trip to:</label>
+    <input type="text" id="input-destination" name="input-destination" placeholder="Enter Destination">
   </div>
-  <div class ="holder feel">
-    <label for="feelings">How are you feeling today?</label>
-    <textarea class= "myInput" id="feelings" placeholder="Enter your feelings here" rows="9" cols="50"></textarea>
+
+  <div class="dateSection">
+
+    <div class="start-date">
+        <label class="label-start-date" for="input-start-date">Start:</label>
+        <input type="date" id="input-start-date" name="departing">
+    </div>
+
+    <div class="end-date">
+        <label class="label-end-date" for="input-end-date">End:</label>
+        <input type="date" id="input-end-date" name="returning">
+    </div>
+
+  </div>
     <button id="generate" type = "submit"> Generate </button>
   </div>
   <div class ="holder entry">
