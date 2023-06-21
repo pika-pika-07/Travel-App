@@ -7,7 +7,7 @@
     "start": "node src/server/index.js",
     "build-prod": "webpack --config webpack.prod.js",
     "build-dev": "webpack-dev-server  --config webpack.dev.js --open",
-    "combined-server": "webpack-dev-server  --config webpack.dev.js --open && node src/server/index.js",
+    "combined-server": "node src/server/index.js & webpack-dev-server  --config webpack.dev.js --open",
     "test": "jest"
   },
   "repository": {
@@ -23,7 +23,7 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "express": "^4.17.1",
-    "node-fetch": "^3.3.1",
+    "node-fetch": "^2.6.11",
     "webpack": "^4.35.3"
   },
   "devDependencies": {
