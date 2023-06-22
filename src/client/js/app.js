@@ -1,5 +1,5 @@
 /* Global Variables */
-
+import {getDays} from './helper'
 const content = document.querySelector('#content')
 const apiBaseURL = 'http://localhost:3000'
 
@@ -9,30 +9,28 @@ export const plan = async () => {
     const startDate = document.querySelector("#input-start-date").value
     const endDate = document.querySelector('#input-end-date').value
 
-    const date1 = new Date(startDate)
-    const date2 = new Date(endDate)
-    
-    const diffTime = Math.abs(date2 - date1);
-    const diff = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    const diffDays =  diff <= 16 ? diff -1 : 15; 
-    
+   
+    const diffDays = getDays(startDate,endDate)
 
-    fetchGeoCordinates(destinationCity)
-    .then( (data) => {
-        console.log("Fnal data",data)
-        const coordinates = data.geonames[0]
-        fetchForecast(diffDays,coordinates.lat,coordinates.lng)
-        
-    }) 
+    const geoData  = await fetchGeoCordinates(destinationCity)
+    const coordinates = geoData.geonames[0]
+
+    const forecastData = await fetchForecast(diffDays,coordinates.lat,coordinates.lng)
+
+    const imageUrl = await fetchImage(destinationCity)
+    debugger
+    const obj = {
+        city:destinationCity,
+        imageUrl: imageUrl,
+        diffDays: diffDays,
+        temp: forecastData.temperature,
+        description: forecastData.description,
+        countryName: coordinates.countryName
+    }
+    await updateUI(obj)
+    
 }
 
-function formatDate(date = new Date()) {
-    const year = date.toLocaleString('default', {year: 'numeric'});
-    const month = date.toLocaleString('default', {month: '2-digit'});
-    const day = date.toLocaleString('default', {day: '2-digit'});
-  
-    return [year, month, day].join('-');
-  }
 
 const fetchGeoCordinates = async (location) => {
 
@@ -63,8 +61,28 @@ const fetchForecast = async (days, lat, lng) => {
         console.log("Error",err)
     }
 
-   
+}
 
+const fetchImage = async (city) => {
+    const apiKey = '37685063-6f00dae4135d76e834728903c'
+    const url = `https://pixabay.com/api/?key=${apiKey}&category=places&q=${city}&image_type=photo&pretty=true`
+
+    const response = await fetch(url)
+   
+    try {
+        const data = await response.json()
+        const img = data['hits'][0]["webformatURL"]
+        return img
+    }
+    catch(err){
+        console.log("Error",err)
+    }
+
+}
+
+const updateUI = async (data) => {
+    document.getElementById('img').setAttribute('src', data.imageUrl);
+    document.getElementById('result-div').innerHTML = `<p>${data.city}, ${data.countryName} is ${data.diffDays} days away.</p><p>Typical weather for then is: <br> Temperature: ${data.temp} <br> ${data.description}</p>`
 }
 
 
