@@ -9,12 +9,13 @@ export const plan = async () => {
     const startDate = document.querySelector("#input-start-date").value
     const endDate = document.querySelector('#input-end-date').value
 
-    const date1 = new Date(startDate);
-    const date2 = new Date(endDate);
+    const date1 = new Date(startDate)
+    const date2 = new Date(endDate)
+    
     const diffTime = Math.abs(date2 - date1);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-    console.log(diffTime + " milliseconds");
-    console.log(diffDays + " days");
+    const diff = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    const diffDays =  diff <= 16 ? diff -1 : 15; 
+    
 
     fetchGeoCordinates(destinationCity)
     .then( (data) => {
@@ -24,6 +25,14 @@ export const plan = async () => {
         
     }) 
 }
+
+function formatDate(date = new Date()) {
+    const year = date.toLocaleString('default', {year: 'numeric'});
+    const month = date.toLocaleString('default', {month: '2-digit'});
+    const day = date.toLocaleString('default', {day: '2-digit'});
+  
+    return [year, month, day].join('-');
+  }
 
 const fetchGeoCordinates = async (location) => {
 
@@ -41,25 +50,20 @@ const fetchGeoCordinates = async (location) => {
 }
 
 const fetchForecast = async (days, lat, lng) => {
-    let url = ''
-    const apiKey = '6b3ab930b62a4c22a37463f203c85c3a'
-    if(days < 7){
-        url = 'https://api.weatherbit.io/v2.0/current'
-    }
-    else{
-        url = 'https://api.weatherbit.io/v2.0/forecast/daily'
-    }
-    const response = await fetch(`${url}?lat=${lat}&lon=${lng}&key=${apiKey}`)
+    const url = `${apiBaseURL}/forecast`;
+  
+    const response = await fetch(`${url}?days=${days}&lat=${lat}&lon=${lng}`)
    
     try {
         const data = await response.json()
-        console.log("New res", data)
-        
+       
         return data
     }
     catch(err){
         console.log("Error",err)
     }
+
+   
 
 }
 

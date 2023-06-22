@@ -46,24 +46,70 @@ const addData = (req,res) => {
 }
 
 const fetchGeoCordinates = async (location) => {
+    
     const baseUrl = `http://api.geonames.org/searchJSON?q=${location}&maxRows=1&username=pika`;
     try{
         const response = await fetch(baseUrl)
         
         const data = response.json()
-        console.log("KOjrfkofgdskfjmds",data)
+       
         return data
     }
     catch(err){
         throw err
     }
 }
-const fetchGeo = async (req,res) => {
-    console.log("HHLLLLLL")
-    const location = req.body
-    console.log("HHLLLLLL",location)
+
+const fetchWeatherForeCast = async (days,lat,lon) => {
+   
+    let url = ''
+    const apiKey = '6b3ab930b62a4c22a37463f203c85c3a'
+    if(days < 7){
+        url = 'https://api.weatherbit.io/v2.0/current'
+    }
+    else{
+        url = 'https://api.weatherbit.io/v2.0/forecast/daily'
+    }
+
+   
+    const response = await fetch(`${url}?lat=${lat}&lon=${lon}&key=${apiKey}&days=${days}`)
+   
     try {
-        const response = await fetchGeoCordinates(location)
+        const data = await response.json()
+        
+        const temp  =  data['data'][0]['temp'];
+        const description =  data['data'][0]['weather']['description'];
+        return {
+            temperature: temp,
+            description: description
+        }
+    }
+    catch(err){
+        console.log("Errordfsfgsdgs",err)
+        throw err
+    }
+}
+
+const fetchGeo = async (req,res) => {
+    console.log(req.query)
+    const { destination } = req.query
+   
+    try {
+        const response = await fetchGeoCordinates(destination)
+        res.send(response)
+    }
+    catch(err){
+        res.send(err)
+    }
+}
+
+const fetchForecast = async (req,res) => {
+   const days  = req.query.days
+   const lat = req.query.lat
+   const lon = req.query.lon
+       
+    try {
+        const response = await fetchWeatherForeCast(days,lat,lon)
         res.send(response)
     }
     catch(err){
@@ -76,7 +122,7 @@ app.get('/getProjectData',getProjectData)
 
 app.get('/geoNames',fetchGeo)
 
-
+app.get('/forecast',fetchForecast)
 
 app.post('/add',addData)
 
