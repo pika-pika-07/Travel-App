@@ -82,7 +82,7 @@ const fetchImage = async (city) => {
 
 const updateUI = async (data) => {
     document.getElementById('img').setAttribute('src', data.imageUrl);
-    document.getElementById('result-div').innerHTML = `<p>${data.city}, ${data.countryName} is ${data.diffDays} days away.</p><p>Typical weather for then is: <br> Temperature: ${data.temp} <br> ${data.description}</p>`
+    document.getElementById('result-div').innerHTML = `<p>${data.city} is ${data.diffDays} days away.</p><p>The weather for that time is: <br> Temperature: ${data.temp} <br> ${data.description}</p>`
 }
 
 
