@@ -15,8 +15,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 //mini-css-extract-plugin: extracts CSS into separate files
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-//  css-minimizer-webpack-plugin: minifies CSS files
-//const CSSMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
+ // css-minimizer-webpack-plugin: minifies CSS files
+const CSSMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
 
 
 //const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -55,7 +55,7 @@ module.exports = {
     optimization: {
         minimizer: [
             new TerserPlugin({}),
-            //new CSSMinimizerWebpackPlugin({})
+            new CSSMinimizerWebpackPlugin({})
         ]
     },
 
