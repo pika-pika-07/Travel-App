@@ -1,6 +1,6 @@
 /* Global Variables */
 import {getDays} from './helper'
-const content = document.querySelector('#content')
+
 const apiBaseURL = 'http://localhost:3000'
 
 
@@ -18,7 +18,7 @@ export const plan = async () => {
     const forecastData = await fetchForecast(diffDays,coordinates.lat,coordinates.lng)
 
     const imageUrl = await fetchImage(destinationCity)
-    debugger
+    
     const obj = {
         city:destinationCity,
         imageUrl: imageUrl,

@@ -1,5 +1,4 @@
-// Setup empty JS object to act as endpoint for all routes
-projectData = {};
+
 
 // Require Express to run server and routes
 const path = require('path');
@@ -32,18 +31,6 @@ const server = app.listen(port, listening);
 //Adding Routes
 
 /* Get route */
-const getProjectData = (req,res) => {
-    res.send(projectData)
-}
-
-const addData = (req,res) => {
-    projectData['temperature'] = req.body.temperature
-    projectData['date'] = req.body.date
-    projectData['feeling'] = req.body.feeling
-
-    res.send(projectData)
-   // projectData.push(req.data)
-}
 
 const fetchGeoCordinates = async (location) => {
     
@@ -118,11 +105,15 @@ const fetchForecast = async (req,res) => {
 }
 
 
-app.get('/getProjectData',getProjectData)
+
 
 app.get('/geoNames',fetchGeo)
 
 app.get('/forecast',fetchForecast)
 
-app.post('/add',addData)
 
+
+module.exports = {
+    server,
+    app
+};
