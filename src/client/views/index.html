@@ -2,23 +2,90 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Weather Journal</title>
+<title>Travel App</title>
 <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<!-- <link rel="stylesheet" href="style.css"> -->
+<!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap" rel="stylesheet"> -->
 </head>
- <body>
-<div id = "app">
-  <div class ="holder headline">
+  <body>
+    <div id = "app">
+
+        <header>
+          <a href="index.html">
+              <h1>Travel Planner</h1>
+          </a>
+          <p class="web-app-description">
+              Are you considering a trip and looking for help to plan it comfortably?
+              This travel planner is the perfect tool to help you with your plans. Tell us where you want to go and when you plan to leave.
+              This application will create a compact card of your trip with all the necessary information.
+          </p>
+
+        </header>
+
+        <main>
+
+          <div class="inputs-container">
+
+              <div class="destination-div">
+                  <label class="label-destination" for="input-destination">My trip to:</label>
+                  <input type="text" id="input-destination" name="input-destination" placeholder="Enter Destination">
+              </div>
+              
+              <div class="date-div">
+
+                  <div class="start-date-div">
+                      <label class="label-start-date" for="input-start-date">Start:</label>
+                      <input type="date" id="input-start-date" name="departing">
+                  </div>
+
+                  <div class="end-date-div">
+                      <label class="label-end-date" for="input-end-date">End:</label>
+                      <input type="date" id="input-end-date" name="returning">
+                  </div>
+
+              </div>
+
+              <div class="generate-trip-div">
+                  <button type="button" id="generate-trip-btn">Generate Trip Card</button>
+              </div>
+          </div>
+
+          <div id="trip-cards" class="trip-cards">
+
+          </div>
+          
+
+        </main>
+        <script>
+          // Check that service workers are supported
+          if ('serviceWorker' in navigator) {
+              // Use the window load event to keep the page load performant
+              window.addEventListener('load', () => {
+                  navigator.serviceWorker.register('/service-worker.js');
+              });
+          }
+        </script>
+    
+    </div>
+     
+
+
+  </body>
+</html>
+
+
+
+ <!-- <div class ="holder headline">
    Travel Planner
   </div>
-  <div class="destinationSection">
+  <div class="destination-div">
     <label class="label-destination" for="input-destination">My trip to:</label>
     <input type="text" id="input-destination" name="input-destination" placeholder="Enter Destination">
   </div>
 
-  <div class="dateSection">
+  <div class="date-div">
 
-    <div class="start-date">
+    <div class="start-date-div">
         <label class="label-start-date" for="input-start-date">Start:</label>
         <input type="date" id="input-start-date" name="departing">
     </div>
@@ -29,30 +96,17 @@
     </div>
 
   </div>
-    <button id="generate" type = "submit"> Generate </button>
-  </div>
+  <div class="generate-trip-div">
+    <button type="button" id="generate-trip-btn">Generate Trip Card</button>
+  </div> -->
 
-  <div id="img-div">
+  <!-- <div id="img-div">
     <img id="img" alt="">
 
   </div>
 
   <div id="result-div">
 
-  </div>
+  </div> -->
   
-  </div>
-  </div>
-  <script>
-    // Check that service workers are supported
-    if ('serviceWorker' in navigator) {
-        // Use the window load event to keep the page load performant
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js');
-        });
-    }
-  </script>
-
-
-</body>
-</html>
+  

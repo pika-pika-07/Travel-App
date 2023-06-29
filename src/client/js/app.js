@@ -1,6 +1,11 @@
 /* Global Variables */
 import { getDays, checkUserInput } from "./helper";
-
+import {
+  createTripImg,
+  createTripInfo,
+  createTripButtons,
+} from "./buildTripCard";
+let count = 10;
 const apiBaseURL = "http://localhost:3000";
 
 export const plan = async () => {
@@ -32,7 +37,16 @@ export const plan = async () => {
       description: forecastData.description,
       countryName: coordinates.countryName,
     };
-    await updateUI(obj);
+    createTripCard(
+      count + 1,
+      geoData,
+      forecastData,
+      imageUrl,
+      startDate,
+      endDate,
+      diffDays
+    );
+    // await updateUI(obj);
   } catch (err) {
     console.log(err);
     return;
@@ -81,9 +95,55 @@ const fetchImage = async (city) => {
   }
 };
 
-const updateUI = async (data) => {
-  document.getElementById("img").setAttribute("src", data.imageUrl);
-  document.getElementById(
-    "result-div"
-  ).innerHTML = `<p>${data.city} is ${data.diffDays} days away.</p><p>The weather for that time is: <br> Temperature: ${data.temp} <br> ${data.description}</p>`;
-};
+// const updateUI = async (data) => {
+//   document.getElementById("img").setAttribute("src", data.imageUrl);
+//   document.getElementById(
+//     "result-div"
+//   ).innerHTML = `<p>${data.city} is ${data.diffDays} days away.</p><p>The weather for that time is: <br> Temperature: ${data.temp} <br> ${data.description}</p>`;
+// };
+
+function createTripCard(
+  unique_identifier,
+  geoNamesData,
+  weatherbitData,
+  imageUrl,
+  startDate,
+  endDate,
+  tripDuration
+) {
+  console.log("6.) Start function createTripCard");
+
+  // ----------------------------------------
+  // 2.6.1) Create new trip-card
+  // ----------------------------------------
+  const trip_card = document.createElement("div");
+  trip_card.setAttribute("class", "trip-card");
+
+  // ----------------------------------------
+  // 2.6.2) Create trip-img
+  // ----------------------------------------
+  createTripImg(trip_card, geoNamesData, imageUrl);
+
+  // ----------------------------------------
+  // 2.6.3) Create trip-info
+  // ----------------------------------------
+  createTripInfo(
+    trip_card,
+    geoNamesData,
+    weatherbitData,
+    startDate,
+    endDate,
+    4,
+    tripDuration
+  );
+
+  // ----------------------------------------
+  // 2.6.4) Create trip-buttons
+  // ----------------------------------------
+  createTripButtons(trip_card, unique_identifier);
+
+  // ----------------------------------------
+  // 2.6.5) Add new trip card to HTML parent div
+  // ----------------------------------------
+  document.getElementById("trip-cards").prepend(trip_card);
+}
