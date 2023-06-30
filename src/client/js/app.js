@@ -39,7 +39,7 @@ export const plan = async () => {
     };
     createTripCard(
       count + 1,
-      geoData,
+      coordinates,
       forecastData,
       imageUrl,
       startDate,
@@ -102,7 +102,7 @@ const fetchImage = async (city) => {
 //   ).innerHTML = `<p>${data.city} is ${data.diffDays} days away.</p><p>The weather for that time is: <br> Temperature: ${data.temp} <br> ${data.description}</p>`;
 // };
 
-function createTripCard(
+const createTripCard = (
   unique_identifier,
   geoNamesData,
   weatherbitData,
@@ -110,7 +110,7 @@ function createTripCard(
   startDate,
   endDate,
   tripDuration
-) {
+) => {
   console.log("6.) Start function createTripCard");
 
   // ----------------------------------------
@@ -146,4 +146,4 @@ function createTripCard(
   // 2.6.5) Add new trip card to HTML parent div
   // ----------------------------------------
   document.getElementById("trip-cards").prepend(trip_card);
-}
+};

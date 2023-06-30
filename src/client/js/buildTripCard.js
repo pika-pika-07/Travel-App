@@ -12,7 +12,7 @@ export const createTripImg = (trip_card, geoNamesData, imageUrl) => {
 
   // retrieve object values
   const img_path = imageUrl;
-  const city = geoNamesData.city;
+  const city = geoNamesData.name;
 
   // create div for trip-img
   const trip_card_img = document.createElement("div");
@@ -89,8 +89,8 @@ function createTripInfo_Destination(trip_card_info_main, geoNamesData) {
   // console.log('6.2.1) create trip-info-destination');
 
   // retrieve object values
-  const city = geoNamesData.city;
-  const country = geoNamesData.country;
+  const city = geoNamesData.name;
+  const country = geoNamesData.countryName;
 
   // create paragraph with strong element
   const p = document.createElement("p");
@@ -166,8 +166,8 @@ function createTripInfo_XDaysAway(
   // console.log('6.2.5) create trip-info-x-days-away');
 
   // retrieve object values
-  const city = geoNamesData.city;
-  const country = geoNamesData.country;
+  const city = geoNamesData.name;
+  const country = geoNamesData.countryName;
 
   // create paragraph with strong element
   const p = document.createElement("p");
@@ -193,7 +193,7 @@ const createTripInfo_Weather = (trip_card_info_weather, weatherbitData) => {
   // retrieve object values
   const max_temp = weatherbitData.max_temp;
   const min_temp = weatherbitData.min_temp;
-  const weather_description = weatherbitData.weather_description;
+  const weather_description = weatherbitData.description;
 
   // create multiple paragraphs with strong elements
   const p1 = document.createElement("p");
@@ -324,9 +324,3 @@ export const createTripButtons = (trip_card, unique_identifier) => {
 
   trip_card.appendChild(trip_card_buttons);
 };
-
-// ********************************************************************************
-// --------------------------------------------------------------------------------
-// 2.) EXPORTS
-// --------------------------------------------------------------------------------
-// ********************************************************************************
