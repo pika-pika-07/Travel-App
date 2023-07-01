@@ -1,17 +1,10 @@
-// ********************************************************************************
 // --------------------------------------------------------------------------------
-// 1.) FUNCTIONS
-// --------------------------------------------------------------------------------
-// ********************************************************************************
-
-// --------------------------------------------------------------------------------
-// 1.1) function createTripImg: creates trip img for card
+// creates trip img for card
 // --------------------------------------------------------------------------------
 export const createTripImg = (trip_card, geoNamesData, imageUrl) => {
   console.log("6.1) create trip-img");
 
   // retrieve object values
-  const img_path = imageUrl;
   const city = geoNamesData.name;
 
   // create div for trip-img
@@ -20,7 +13,7 @@ export const createTripImg = (trip_card, geoNamesData, imageUrl) => {
 
   // create img
   const img = document.createElement("img");
-  img.src = img_path;
+  img.src = imageUrl;
   img.alt = city;
 
   // append img to trip_card
@@ -40,39 +33,34 @@ export const createTripInfo = (
   dayDifference,
   tripDuration
 ) => {
-  console.log("6.2) create trip-info");
-
   // create divs for trip-card-info, trip-card-info-main, trip-card-info-stats, trip-card-info-weather
   const trip_card_info = document.createElement("div");
   const trip_card_info_main = document.createElement("div");
   const trip_card_info_stats = document.createElement("div");
   const trip_card_info_weather = document.createElement("div");
 
+  // Assign classes to each div
   trip_card_info.setAttribute("class", "trip-card-info");
   trip_card_info_main.setAttribute("class", "trip-card-info-main");
   trip_card_info_stats.setAttribute("class", "trip-card-info-stats");
   trip_card_info_weather.setAttribute("class", "trip-card-info-weather");
 
-  // 1.2.1) creates paragraph for 'destination'-info
+  // creates paragraph for 'destination'-info
   createTripInfo_Destination(trip_card_info_main, geoNamesData);
 
-  // 1.2.2) creates paragraph for 'departing'-info
+  // creates paragraph for 'departing'-info
   createTripInfo_Departing(trip_card_info_main, startDate);
 
-  // 1.2.3) creates paragraph for 'returning'-info if end-date has been given
-  if (endDate !== "undefined/undefined/") {
+  // creates paragraph for 'returning'-info and 'trip duration' -info if end-date has been given
+  if (endDate !== "undefined") {
     createTripInfo_Returning(trip_card_info_main, endDate);
-  }
-
-  // 1.2.4) creates paragraph for 'trip duration'-info if end-date has been given
-  if (endDate !== "undefined/undefined/") {
     createTripInfo_TripDuration(trip_card_info_stats, tripDuration);
   }
 
-  // 1.2.5) creates paragraph for 'x days away'-info
+  // creates paragraph for 'x days away'-info
   createTripInfo_XDaysAway(trip_card_info_stats, dayDifference, geoNamesData);
 
-  // 1.2.6) creates paragraph for 'weather'-info if departure is in less then 16 days
+  // creates paragraph for 'weather'-info if departure is in less then 16 days
   if (Object.keys(weatherbitData).length > 0) {
     createTripInfo_Weather(trip_card_info_weather, weatherbitData);
   }
@@ -84,10 +72,8 @@ export const createTripInfo = (
   trip_card.appendChild(trip_card_info);
 };
 
-// 1.2.1) function createTripInfo_Destination: creates paragraph for 'destination'-info
-function createTripInfo_Destination(trip_card_info_main, geoNamesData) {
-  // console.log('6.2.1) create trip-info-destination');
-
+// function createTripInfo_Destination: creates paragraph for 'destination'-info
+const createTripInfo_Destination = (trip_card_info_main, geoNamesData) => {
   // retrieve object values
   const city = geoNamesData.name;
   const country = geoNamesData.countryName;
@@ -102,12 +88,10 @@ function createTripInfo_Destination(trip_card_info_main, geoNamesData) {
 
   // append paragraph to trip_card_info_main
   trip_card_info_main.appendChild(p);
-}
+};
 
-// 1.2.2) function createTripInfo_Departing: creates paragraph for 'departing'-info
-function createTripInfo_Departing(trip_card_info_main, startDate) {
-  // console.log('6.2.2) create trip-info-departing');
-
+//function createTripInfo_Departing: creates paragraph for 'departing'-info
+const createTripInfo_Departing = (trip_card_info_main, startDate) => {
   // create paragraph with strong element
   const p = document.createElement("p");
   const s = document.createElement("strong");
@@ -118,12 +102,10 @@ function createTripInfo_Departing(trip_card_info_main, startDate) {
 
   // append paragraph to trip_card_info_main
   trip_card_info_main.appendChild(p);
-}
+};
 
-// 1.2.3) function createTripInfo_Returning: creates paragraph for 'returning'-info
-function createTripInfo_Returning(trip_card_info_main, endDate) {
-  // console.log('6.2.3) create trip-info-returning');
-
+// createTripInfo_Returning: creates paragraph for 'returning'-info
+const createTripInfo_Returning = (trip_card_info_main, endDate) => {
   // create paragraph with strong element
   const p = document.createElement("p");
   const s = document.createElement("strong");
@@ -134,12 +116,10 @@ function createTripInfo_Returning(trip_card_info_main, endDate) {
 
   // append paragraph to trip_card_info_main
   trip_card_info_main.appendChild(p);
-}
+};
 
-// 1.2.4) function createTripInfo_TripDuration: creates paragraph for 'trip duration'-info
-function createTripInfo_TripDuration(trip_card_info_stats, tripDuration) {
-  // console.log('6.2.4) create trip-info-trip-duration');
-
+// creates paragraph for 'trip duration'-info
+const createTripInfo_TripDuration = (trip_card_info_stats, tripDuration) => {
   // create paragraph with strong element
   const p = document.createElement("p");
   const s = document.createElement("strong");
@@ -155,17 +135,14 @@ function createTripInfo_TripDuration(trip_card_info_stats, tripDuration) {
 
   // append paragraph to trip_card_info_main
   trip_card_info_stats.appendChild(p);
-}
+};
 
-// 1.2.5) function createTripInfo_XDaysAway: creates paragraph for 'x days away'-info
+//  creates paragraph for 'x days away'-info
 function createTripInfo_XDaysAway(
   trip_card_info_stats,
   dayDifference,
   geoNamesData
 ) {
-  // console.log('6.2.5) create trip-info-x-days-away');
-
-  // retrieve object values
   const city = geoNamesData.name;
   const country = geoNamesData.countryName;
 
@@ -186,7 +163,7 @@ function createTripInfo_XDaysAway(
   trip_card_info_stats.appendChild(p);
 }
 
-// 1.2.6) function createTripInfo_weather: creates paragraph for 'weather'-info if departure is in less then 16 days
+// creates paragraph for 'weather'-info if departure is in less then 16 days
 const createTripInfo_Weather = (trip_card_info_weather, weatherbitData) => {
   // console.log('6.2.6) create trip-info-weather');
 
@@ -217,7 +194,7 @@ const createTripInfo_Weather = (trip_card_info_weather, weatherbitData) => {
 };
 
 // --------------------------------------------------------------------------------
-// 1.3) function createTripButtons: creates trip buttons for card
+//creates trip buttons for card
 // --------------------------------------------------------------------------------
 export const createTripButtons = (trip_card, unique_identifier) => {
   console.log("6.3) create trip-buttons");

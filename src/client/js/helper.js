@@ -1,12 +1,18 @@
 export const getDays = (startDate, endDate) => {
   const date1 = new Date(startDate);
   const date2 = new Date(endDate);
+  const currentDate = new Date();
+  let timeDifference = 0;
+  // Calculate no fo days left for the trip
+  timeDifference = date1.getTime() - currentDate.getTime();
+  const msPerDay = 24 * 60 * 60 * 1000;
+  const dayDifference = Math.ceil(timeDifference / msPerDay);
 
   const diffTime = Math.abs(date2 - date1);
   const diff = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   const diffDays = diff <= 16 ? diff - 1 : 15;
 
-  return diffDays;
+  return { diffDays, dayDifference };
 };
 
 export const checkUserInput = (destination, startDate, endDate) => {

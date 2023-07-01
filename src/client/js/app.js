@@ -16,7 +16,7 @@ export const plan = async () => {
   try {
     checkUserInput(destinationCity, startDate, endDate);
 
-    const diffDays = getDays(startDate, endDate);
+    const { diffDays, dayDifference } = getDays(startDate, endDate);
 
     const geoData = await fetchGeoCordinates(destinationCity);
     const coordinates = geoData.geonames[0];
@@ -44,9 +44,9 @@ export const plan = async () => {
       imageUrl,
       startDate,
       endDate,
+      dayDifference,
       diffDays
     );
-    // await updateUI(obj);
   } catch (err) {
     console.log(err);
     return;
@@ -95,13 +95,6 @@ const fetchImage = async (city) => {
   }
 };
 
-// const updateUI = async (data) => {
-//   document.getElementById("img").setAttribute("src", data.imageUrl);
-//   document.getElementById(
-//     "result-div"
-//   ).innerHTML = `<p>${data.city} is ${data.diffDays} days away.</p><p>The weather for that time is: <br> Temperature: ${data.temp} <br> ${data.description}</p>`;
-// };
-
 const createTripCard = (
   unique_identifier,
   geoNamesData,
@@ -109,23 +102,22 @@ const createTripCard = (
   imageUrl,
   startDate,
   endDate,
+  dayDifference,
   tripDuration
 ) => {
-  console.log("6.) Start function createTripCard");
-
   // ----------------------------------------
-  // 2.6.1) Create new trip-card
+  // Create new trip-card
   // ----------------------------------------
   const trip_card = document.createElement("div");
   trip_card.setAttribute("class", "trip-card");
 
   // ----------------------------------------
-  // 2.6.2) Create trip-img
+  // Create trip-img
   // ----------------------------------------
   createTripImg(trip_card, geoNamesData, imageUrl);
 
   // ----------------------------------------
-  // 2.6.3) Create trip-info
+  // Create trip-info
   // ----------------------------------------
   createTripInfo(
     trip_card,
@@ -133,7 +125,7 @@ const createTripCard = (
     weatherbitData,
     startDate,
     endDate,
-    4,
+    dayDifference,
     tripDuration
   );
 
