@@ -4,7 +4,7 @@ Capstone-Travel-App
 1.) Description
 This web application is a 'Travel Planner' that helps users plan their trips. It will Display weather info for the trip on entering the destination and the dates for the trip
 
-3.) Getting started
+2.) Getting started
 This project contains a build-tool implementation called webpack. For this project to run properly, it is important to first implement the build-tool before starting the project. To achieve this, all required dependencies must be installed. In your terminal, navigate to the root directory of the project and enter the following command:
 
 npm install
